@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}ようこそ{% endblock %}
+{% block content %}
+  {#
+    【脆弱性④】保存型XSS
+    ❌ |safe を付けると、Jinja2 の自動エスケープが無効になる。
+       名前を <script>alert('XSS')</script> で登録すると、
+       この画面を開いたときにスクリプトが実行される。
+    ✅ 正しい書き方：|safe を外して {{ name }} にする
+       （< が &lt; に変換され、ただの文字として表示される）
+  #}
+  <h1>ようこそ、{{ name|safe }} さん</h1>
+  <p>ログイン中のメールアドレス：{{ email }}</p>
+  <p>ボランティアにご登録いただき、ありがとうございます。</p>
+  <a class="button" href="{{ url_for('logout') }}">ログアウト</a>
+{% endblock %}
